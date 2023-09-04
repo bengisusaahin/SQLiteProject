@@ -16,19 +16,23 @@ public class MainActivity extends AppCompatActivity {
         try {
             SQLiteDatabase database = this.openOrCreateDatabase("Musicians", MODE_PRIVATE,
                     null);
-            database.execSQL("CREATE TABLE IF NOT EXISTS musicians (name VARCHAR, age INT)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS musicians (id INTEGER PRIMARY KEY, name VARCHAR, age INT)");
 
-//            database.execSQL("INSERT INTO musicians (name,age) VALUES ('James',50)");
-            database.execSQL("INSERT INTO musicians (name,age) VALUES ('Lars',60)");
+            //database.execSQL("INSERT INTO musicians (name,age) VALUES ('James',50)");
+            //database.execSQL("INSERT INTO musicians (name,age) VALUES ('Lars',60)");
+            //database.execSQL("INSERT INTO musicians (name,age) VALUES ('Kirk',55)");
 
+            //Cursor cursor = database.rawQuery("SELECT * FROM musicians WHERE id = 2",null);
             Cursor cursor = database.rawQuery("SELECT * FROM musicians",null);
 
             int nameIndex = cursor.getColumnIndex("name");
             int ageIx = cursor.getColumnIndex("age");
+            int idIx = cursor.getColumnIndex("id");
 
             while (cursor.moveToNext()){
                 System.out.println("Name: "+ cursor.getString(nameIndex));
                 System.out.println("Age: "+ cursor.getInt(ageIx));
+                System.out.println("Id: "+ cursor.getInt(idIx));
             }
             cursor.close();
         }catch (Exception e){
